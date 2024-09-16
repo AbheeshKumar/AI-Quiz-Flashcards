@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -11,7 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useRouter } from "next/navigation";
 import { Navbar } from "../Components/navbar";

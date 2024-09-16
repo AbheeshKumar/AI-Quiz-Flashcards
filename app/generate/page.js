@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  AppBar,
   Box,
   Button,
   CircularProgress,
@@ -11,18 +10,11 @@ import {
   DialogTitle,
   FormControl,
   Grid,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  Slide,
   Stack,
   TextField,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import { Navbar } from "../Components/navbar";
-import AdbIcon from "@mui/icons-material/Adb";
 import { db } from "../../firebase";
 import React, { useState } from "react";
 import { useUser } from "@clerk/nextjs";

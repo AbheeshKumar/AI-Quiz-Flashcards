@@ -11,9 +11,7 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  Container,
   Grid,
-  Stack,
   Typography,
 } from "@mui/material";
 import { Navbar } from "../Components/navbar";
