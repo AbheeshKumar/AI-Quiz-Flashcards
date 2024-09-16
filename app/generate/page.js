@@ -25,7 +25,7 @@ import { Navbar } from "../Components/navbar";
 import AdbIcon from "@mui/icons-material/Adb";
 import { db } from "../../firebase";
 import React, { useState } from "react";
-import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import styles from "../page.module.css";
 import Flashcard from "../Components/flashcard";
 import { LoadingButton } from "@mui/lab";
@@ -34,6 +34,7 @@ import { collection, doc, getDoc, writeBatch } from "firebase/firestore";
 import { promptService } from "../Service/genai";
 
 export default function Home() {
+  const { isSignedIn, isLoaded } = useUser();
   const [output, setOutput] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsloading] = useState(false);
@@ -43,6 +44,10 @@ export default function Home() {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const { user } = useUser();
+
+  if (!isLoaded || !isSignedIn) {
+    router.push("/forbidden");
+  }
 
   const handleOpen = () => {
     setOpen(true);
