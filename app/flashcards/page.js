@@ -14,7 +14,7 @@ import { useUser } from "@clerk/nextjs";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useRouter } from "next/navigation";
-import { Router } from "@mui/icons-material";
+import { Navbar } from "../Components/navbar";
 
 export default function SavedFlashcards() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -36,7 +36,7 @@ export default function SavedFlashcards() {
   }, [user]);
 
   if (!isLoaded || !isSignedIn) {
-    return <></>;
+    router.push("/forbidden");
   }
 
   const handleCardClick = (id) => {
@@ -45,6 +45,7 @@ export default function SavedFlashcards() {
 
   return (
     <Container maxWidth="100vw">
+      <Navbar />
       <Grid container spacing={4} sx={{ mt: 4 }}>
         {flashcards.map((flashcard, index) => (
           <Grid key={index} item xs={12} sm={6} md={4}>

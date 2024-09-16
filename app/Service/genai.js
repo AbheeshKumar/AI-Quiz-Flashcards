@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
 const cleanString = (str) => str.replace(/[^a-zA-Z0-9\s]/g, "").trim();
 
 export const promptService = async (inputValue) => {
-  const SECRET_KEY = process.env.local.NEXT_PUBLIC_GEMINI_API;
+  const SECRET_KEY = process.env.NEXT_PUBLIC_GEMINI_API;
 
   const chat = new ChatGoogleGenerativeAI({ apiKey: SECRET_KEY });
   ``;

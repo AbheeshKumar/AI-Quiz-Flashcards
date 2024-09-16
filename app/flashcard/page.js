@@ -4,7 +4,7 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { collection, doc, getDocs } from "firebase/firestore";
 import {
   Box,
@@ -16,6 +16,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { Navbar } from "../Components/navbar";
 
 const OptionsSection = ({ answer, choice }) => {
   return (
@@ -45,7 +46,7 @@ export default function Flashcard() {
   const [flashcards, setFlashcards] = useState();
   const searchParams = useSearchParams();
   const search = searchParams.get("id");
-
+  const router = useRouter();
   useEffect(() => {
     async function getFlashCard() {
       if (!search || !user) return;
@@ -62,71 +63,74 @@ export default function Flashcard() {
   }, [search, user]);
 
   if (!isLoaded || !isSignedIn) {
-    return <></>;
+    router.push("/forbidden");
   }
 
   return (
-    <Grid justifyContent="center" alignItems="center" container spacing={8}>
-      {flashcards?.map((flashcard, index) => (
-        <Grid item key={index}>
-          <Card sx={{ width: "300px", height: "400px", my: "2rem" }}>
-            <CardActionArea sx={{ height: "100%" }}>
-              <CardContent sx={{ height: "100%" }}>
-                <Box sx={{ height: "100%" }}>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-around"
-                    alignItems="flex-start"
-                    height="30%"
-                  >
-                    <Typography fontSize="0.9rem" fontWeight="bold">
-                      {flashcard.question}
-                    </Typography>
+    <Box width="100vw">
+      <Navbar />
+      <Grid justifyContent="center" alignItems="center" container spacing={8}>
+        {flashcards?.map((flashcard, index) => (
+          <Grid item key={index}>
+            <Card sx={{ width: "300px", height: "400px", my: "2rem" }}>
+              <CardActionArea sx={{ height: "100%" }}>
+                <CardContent sx={{ height: "100%" }}>
+                  <Box sx={{ height: "100%" }}>
                     <Box
-                      p="0.2rem"
-                      px="1rem"
-                      maxHeight="25px"
                       display="flex"
-                      flex={1}
-                      borderRadius="50px"
-                      bgcolor="lightblue"
+                      flexDirection="column"
+                      justifyContent="space-around"
+                      alignItems="flex-start"
+                      height="30%"
                     >
-                      <Typography fontSize="0.8rem">
-                        {flashcard.topic}
+                      <Typography fontSize="0.9rem" fontWeight="bold">
+                        {flashcard.question}
                       </Typography>
+                      <Box
+                        p="0.2rem"
+                        px="1rem"
+                        maxHeight="25px"
+                        display="flex"
+                        flex={1}
+                        borderRadius="50px"
+                        bgcolor="lightblue"
+                      >
+                        <Typography fontSize="0.8rem">
+                          {flashcard.topic}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box
+                      height="70%"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <OptionsSection
+                        choice={flashcard.options.a}
+                        answer={flashcard.answer}
+                      />
+                      <OptionsSection
+                        choice={flashcard.options.b}
+                        answer={flashcard.answer}
+                      />
+                      <OptionsSection
+                        choice={flashcard.options.c}
+                        answer={flashcard.answer}
+                      />
+                      <OptionsSection
+                        choice={flashcard.options.d}
+                        answer={flashcard.answer}
+                      />
                     </Box>
                   </Box>
-                  <Box
-                    height="70%"
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <OptionsSection
-                      choice={flashcard.options.a}
-                      answer={flashcard.answer}
-                    />
-                    <OptionsSection
-                      choice={flashcard.options.b}
-                      answer={flashcard.answer}
-                    />
-                    <OptionsSection
-                      choice={flashcard.options.c}
-                      answer={flashcard.answer}
-                    />
-                    <OptionsSection
-                      choice={flashcard.options.d}
-                      answer={flashcard.answer}
-                    />
-                  </Box>
-                </Box>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }

@@ -11,13 +11,8 @@ body {
 }
 
 body {
-  color: black;
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: #171717;
+  background-color: #f2f2f2;
 }
 
 a {
